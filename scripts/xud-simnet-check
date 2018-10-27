@@ -2,5 +2,4 @@
 
 cd ~/xud-simnet
 
-TODO: check existance of pre-req
-
+echo "looking good!"
