@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cd ~/xud-simnet
+
+shopt -s expand_aliases
+source setup.bash
+
+btcctl stop
+ltcctl stop
+sleep 5
+
+killall node
+killall lnd
+killall btcd
+killall ltcd
+
+killall -9 node
+killall -9 lnd
+killall -9 btcd
+killall -9 ltcd

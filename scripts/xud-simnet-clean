@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cd ~/xud-simnet
+rm -rf btcd
+rm -rf ltcd
+rm -rf lndbtc
+rm -rf lndltc
+rm -rf xud
+rm -rf xud-wd
+rm -rf go

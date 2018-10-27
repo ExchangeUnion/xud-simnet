@@ -1,0 +1,41 @@
+#!/bin/bash
+
+cd ~/xud-simnet
+
+source setup.bash
+mkdir ~/xud-simnet/btcd
+mkdir ~/xud-simnet/ltcd
+mkdir ~/xud-simnet/lndbtc
+mkdir ~/xud-simnet/lndltc
+mkdir ~/xud-simnet/xud-wd
+
+#### glide
+go get -u github.com/Masterminds/glide 
+
+#### ltcd
+git clone https://github.com/offerm/ltcd $GOPATH/src/github.com/ltcsuite/ltcd
+cd $GOPATH/src/github.com/ltcsuite/ltcd
+glide install
+go install . ./cmd/...  
+ 
+#### btcd
+git clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
+cd $GOPATH/src/github.com/btcsuite/btcd
+glide install
+go install . ./cmd/...  
+
+
+#### lnd
+git clone -b resolver+simnet-ltcd https://github.com/ExchangeUnion/lnd.git $GOPATH/src/github.com/lightningnetwork/lnd
+cd $GOPATH/src/github.com/lightningnetwork/lnd
+make && make install
+
+#### xud
+cd ~/xud-simnet
+git clone https://github.com/ExchangeUnion/xud.git
+cd xud
+npm install
+npm run compile
+
+
+

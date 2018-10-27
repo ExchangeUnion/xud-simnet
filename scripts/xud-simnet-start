@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cd ~/xud-simnet
+
+source setup.bash
+
+### run
+xname=`hostname`
+xname=${xname:0:28}
+#### btcd
+cd ~/xud-simnet/btcd
+nohup btcd --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:18555 --rpcuser=xu --rpcpass=xu  --rpclisten 127.0.0.1:18556 --nolisten > /dev/null 2>&1 &
+#### ltcd
+cd ~/xud-simnet/ltcd
+nohup ltcd --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:19555 --rpcuser=xu --rpcpass=xu --rpclisten=127.0.0.1:19556 --nolisten > /dev/null 2>&1 &
+#### lndbtc
+cd ~/xud-simnet/lndbtc
+nohup lnd --noseedbackup --rpclisten=127.0.0.1:10002 --listen=127.0.0.1:10012 --restlisten=8002 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --bitcoin.active --bitcoin.simnet  --btcd.rpcuser=xu --btcd.rpcpass=xu --debuglevel=debug --alias="BTC@$xname" --btcd.rpchost=127.0.0.1:18556  > /dev/null 2>&1 &
+#### lndltc
+cd ~/xud-simnet/lndltc
+nohup lnd --noseedbackup --rpclisten=127.0.0.1:10001 --listen=127.0.0.1:10011 --restlisten=8001 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --litecoin.active --litecoin.simnet  --ltcd.rpcuser=xu --ltcd.rpcpass=xu --debuglevel=debug --alias="LTC@$xname" --ltcd.rpchost=127.0.0.1:19556  > /dev/null 2>&1 &
+#### Starting xud
+cd ~/xud-simnet/xud-wd
+nohup xud --raiden.disable --lndbtc.nomacaroons --lndbtc.port 10002 --lndltc.nomacaroons --lndltc.port 10001 -x . > /dev/null 2>&1 &
+
+
