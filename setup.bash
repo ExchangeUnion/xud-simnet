@@ -10,4 +10,12 @@ export GOPATH=~/xud-simnet/go
 
 export PATH=~/xud-simnet/xud/bin:$GOPATH/bin:~/xud-simnet/scripts:$PATH
 
+case "$OSTYPE" in
+  solaris*) echo "SOLARIS" ;;
+  darwin*)  echo "OSX" ;alias tac='tail -r';;
+  linux*)   echo "LINUX" ;;
+  bsd*)     echo "BSD" ;;
+  msys*)    echo "WINDOWS" ;;
+  *)        echo "unknown: $OSTYPE" ;;
+esac
 
