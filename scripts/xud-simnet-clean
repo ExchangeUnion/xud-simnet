@@ -1,10 +1,38 @@
 #!/bin/sh
 
+delete_dir() {
+	rm -rf  $1
+	echo "$1 directory deleted"
+}
+
+confirm_not_running() {
+if pgrep -f  "$2" > /dev/null
+then
+    echo "$1 is running. Please stop all processes before using xud-simnet-clean. You can use xud-simnet-stop."
+    exit 1
+else
+    return 0
+fi
+}
+
+read -p "Are you sure (y/n)? " -n 1 -r
+echo     
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+	exit 1
+fi
 cd ~/xud-simnet
-rm -rf btcd
-rm -rf ltcd
-rm -rf lndbtc
-rm -rf lndltc
-rm -rf xud
-rm -rf xud-wd
-rm -rf go
+confirm_not_running "btcd" "btcd.*18555"
+confirm_not_running "ltcd" "ltcd.*19555"
+confirm_not_running "lndbtc" "lnd.*10012"
+confirm_not_running "lndltc" "lnd.*10011"
+confirm_not_running "xud" "node.*10002.*10001"
+delete_dir "btcd"
+delete_dir "ltcd"
+delete_dir "lndbtc"
+delete_dir "lndltc"
+delete_dir "xud"
+delete_dir "xud-wd"
+delete_dir "go"
+
+
