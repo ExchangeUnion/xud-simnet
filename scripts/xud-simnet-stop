@@ -5,16 +5,22 @@ cd ~/xud-simnet
 shopt -s expand_aliases
 source setup.bash
 
-btcctl stop
-ltcctl stop
-sleep 5
+echo "stopping all processes"
 
-killall node
-killall lnd
-killall btcd
-killall ltcd
+btcctl stop >/dev/null 2>&1
+ltcctl stop >/dev/null 2>&1
+sleep 5 
 
-killall -9 node
-killall -9 lnd
-killall -9 btcd
-killall -9 ltcd
+killall node >/dev/null 2>&1
+killall lnd >/dev/null 2>&1
+killall btcd >/dev/null 2>&1
+killall ltcd >/dev/null 2>&1
+
+killall -9 node >/dev/null 2>&1
+killall -9 lnd >/dev/null 2>&1
+killall -9 btcd >/dev/null 2>&1
+killall -9 ltcd >/dev/null 2>&1
+
+
+confirm_all_not_running
+echo "Done"

@@ -5,10 +5,20 @@ cd ~/xud-simnet
 shopt -s expand_aliases
 source setup.bash
 
+if ! xud-simnet-stop
+then
+	echo "failed to stop processes"
+	exit 1
+fi
+if ! xud-simnet-start
+then 
+	echo "failed to start processes"
+	exit 1
+fi
 # ensure connection to test nodes
-xucli connect 02b66438730d1fcdf4a4ae5d3d73e847a272f160fee2938e132b52cab0a0d9cfc6@35.196.118.79:8885
-xucli connect 028599d05b18c0c3f8028915a17d603416f7276c822b6b2d20e71a3502bd0f9e0a@35.231.171.148:8885
-xucli connect 03fd337659e99e628d0487e4f87acf93e353db06f754dccc402f2de1b857a319d0@35.229.81.83:8885
+xucli connect 02b66438730d1fcdf4a4ae5d3d73e847a272f160fee2938e132b52cab0a0d9cfc6@35.196.118.79:8885 >/dev/null 2>&1
+xucli connect 028599d05b18c0c3f8028915a17d603416f7276c822b6b2d20e71a3502bd0f9e0a@35.231.171.148:8885 >/dev/null 2>&1
+xucli connect 03fd337659e99e628d0487e4f87acf93e353db06f754dccc402f2de1b857a319d0@35.229.81.83:8885 >/dev/null 2>&1
 
 let server="$RANDOM % 3 +1"
 let head="$server*2"
@@ -17,10 +27,31 @@ echo "open channel with $connectstr"
 lndbtc-lncli connect $connectstr:10012
 
 
-
-
 let server="$RANDOM % 3 +1"
 let head="$server*2"
 connectstr=`xucli listpeers|egrep 'lndLtc|address'|cut -d ":" -f 2 |head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -`
 echo "open channel with $connectstr"
 lndltc-lncli connect $connectstr:10011
+
+lndbtc-lncli listchannels|grep active
+echo "waiting for see active BTC channels"
+while true; do
+        echo -n "."
+        if  lndbtc-lncli listchannels 2>&1 |grep active > /dev/null 2>&1; then
+                break
+        fi
+        sleep 1
+done
+echo -e "\nBTC channel is active"
+
+echo "waiting for see active LTC channels"
+while true; do
+        echo -n "."
+        if  lndltc-lncli listchannels 2>&1 |grep active > /dev/null 2>&1; then
+                break
+        fi
+        sleep 1
+done
+echo -e "\nLTC channel is active"
+
+echo "Xud system is ready!"
