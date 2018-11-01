@@ -33,7 +33,6 @@ connectstr=`xucli listpeers|egrep 'lndLtc|address'|cut -d ":" -f 2 |head -n $hea
 echo "open channel with $connectstr"
 lndltc-lncli connect $connectstr:10011
 
-lndbtc-lncli listchannels|grep active
 echo "waiting for see active BTC channels"
 while true; do
         echo -n "."
