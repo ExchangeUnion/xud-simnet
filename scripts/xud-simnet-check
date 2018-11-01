@@ -39,13 +39,13 @@ fi
 # verify PATH
 temp=`echo $PATH|grep xud-simnet/scripts`
 if [ $? -ne 0 ]; then
-	echo "PATH is not properly set. Did you sourced setup.bash?"
+	echo "PATH is not properly set. Did you source setup.bash?"
 	exit 1
 fi
 # verify PATH
 temp=`echo $PATH|grep xud-simnet/go/bin`
 if [ $? -ne 0 ]; then
-	echo "PATH is not properly set. Did you sourced setup.bash?"
+	echo "PATH is not properly set. Did you source setup.bash?"
 	exit 1
 fi
 

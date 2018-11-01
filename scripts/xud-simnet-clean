@@ -1,8 +1,11 @@
 #!/bin/sh
 
 delete_dir() {
-	rm -rf  $1
-	echo "$1 directory deleted"
+	if ! rm -rf  $1 >/dev/null 2>&1; then
+		echo "unable to delete directory $1"
+		exit 1
+	fi
+	return 0
 }
 
 confirm_not_running() {
@@ -34,5 +37,6 @@ delete_dir "lndltc"
 delete_dir "xud"
 delete_dir "xud-wd"
 delete_dir "go"
+echo "Done. You can now use xud-simnet-install"
 
 
