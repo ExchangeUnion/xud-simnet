@@ -24,6 +24,12 @@ if [ $? -ne 0 ]; then
 	echo "npm is missing"
 	exit 1
 fi
+# verify python
+temp=`which python`
+if [ $? -ne 0 ]; then
+	echo "python is missing"
+	exit 1
+fi
 # verify killall
 temp=`which killall`
 if [ $? -ne 0 ]; then
