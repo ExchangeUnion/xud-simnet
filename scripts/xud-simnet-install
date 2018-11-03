@@ -43,18 +43,18 @@ fi
  
 echo "ltcd installed"
 #### btcd
-if ! git clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd > /dev/null 2>&1; then
+if ! git clone https://github.com/ExchangeUnion/btcd $GOPATH/src/github.com/btcsuite/btcd > /dev/null 2>&1; then
 	echo "unable to git clone btcd"
 	exit 1
 fi
 cd $GOPATH/src/github.com/btcsuite/btcd
-echo "ltcd repo downloaded"
+echo "btcd repo downloaded"
 if ! glide install > /dev/null 2>&1;then
 	echo "unable to build btcd"
 	exit 1
 fi
 if ! go install . ./cmd/... > /dev/null 2>&1 ; then
-	echo "unable to go instll ltcd"
+	echo "unable to go instll btcd"
 	exit 1
 fi  
 echo "btcd installed"
