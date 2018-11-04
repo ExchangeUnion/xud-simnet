@@ -12,7 +12,7 @@ xname=${xname:0:28}
 timeout="30"
 #### btcd
 cd ~/xud-simnet/btcd
-nohup btcd --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:18555 --rpcuser=xu --rpcpass=xu  --rpclisten 127.0.0.1:18556 --nolisten > /dev/null 2>&1 &
+nohup btcd -C ./btcd.conf --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:18555 --rpcuser=xu --rpcpass=xu  --rpclisten 127.0.0.1:18556 --nolisten --rpccert=./rpc.cert --rpckey=./rpc.key> /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))
@@ -29,7 +29,7 @@ done
 echo "btcd started"
 #### ltcd
 cd ~/xud-simnet/ltcd
-nohup ltcd --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:19555 --rpcuser=xu --rpcpass=xu --rpclisten=127.0.0.1:19556 --nolisten > /dev/null 2>&1 &
+nohup ltcd -C ./btcd.conf --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:19555 --rpcuser=xu --rpcpass=xu --rpclisten=127.0.0.1:19556 --nolisten --rpccert=./rpc.cert --rpckey=./rpc.key> /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))
@@ -46,7 +46,8 @@ done
 echo "ltcd started"
 #### lndbtc
 cd ~/xud-simnet/lndbtc
-nohup lnd --noseedbackup --rpclisten=127.0.0.1:10002 --listen=127.0.0.1:10012 --restlisten=8002 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --bitcoin.active --bitcoin.simnet  --btcd.rpcuser=xu --btcd.rpcpass=xu --debuglevel=debug --alias="BTC@$xname" --btcd.rpchost=127.0.0.1:18556  > /dev/null 2>&1 &
+cert=~/xud-simnet/btcd/rpc.cert
+nohup lnd --noseedbackup --rpclisten=127.0.0.1:10002 --listen=127.0.0.1:10012 --restlisten=8002 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --bitcoin.active --bitcoin.simnet  --btcd.rpcuser=xu --btcd.rpcpass=xu --debuglevel=debug --alias="BTC@$xname" --btcd.rpchost=127.0.0.1:18556  --btcd.rpccert=$cert > /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))
@@ -63,7 +64,8 @@ done
 echo "lndbtc started"
 #### lndltc
 cd ~/xud-simnet/lndltc
-nohup lnd --noseedbackup --rpclisten=127.0.0.1:10001 --listen=127.0.0.1:10011 --restlisten=8001 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --litecoin.active --litecoin.simnet  --ltcd.rpcuser=xu --ltcd.rpcpass=xu --debuglevel=debug --alias="LTC@$xname" --ltcd.rpchost=127.0.0.1:19556  > /dev/null 2>&1 &
+cert=~/xud-simnet/ltcd/rpc.cert
+nohup lnd --noseedbackup --rpclisten=127.0.0.1:10001 --listen=127.0.0.1:10011 --restlisten=8001 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --litecoin.active --litecoin.simnet  --ltcd.rpcuser=xu --ltcd.rpcpass=xu --debuglevel=debug --alias="LTC@$xname" --ltcd.rpchost=127.0.0.1:19556  --ltcd.rpccert=$cert > /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))
