@@ -1,4 +1,66 @@
 #!/bin/bash
+
+check_prereq() {
+
+
+# verify existing of ~/xud-simnet
+temp=`ls ~/xud-simnet`
+if [ $? -ne 0 ]; then
+	echo "~/xud-simnet is missing"
+	exit 1
+fi
+# verify git
+temp=`which git`
+if [ $? -ne 0 ]; then
+	echo "git is missing"
+	exit 1
+fi
+# verify make
+temp=`which make`
+if [ $? -ne 0 ]; then
+	echo "make is missing"
+	exit 1
+fi
+# verify npm
+temp=`which npm`
+if [ $? -ne 0 ]; then
+	echo "npm is missing"
+	exit 1
+fi
+# verify python
+temp=`which python`
+if [ $? -ne 0 ]; then
+	echo "python is missing"
+	exit 1
+fi
+# verify killall
+temp=`which killall`
+if [ $? -ne 0 ]; then
+	echo "killall is missing"
+	exit 1
+fi
+# verify go
+temp=`which go`
+if [ $? -ne 0 ]; then
+	echo "go is missing"
+	exit 1
+fi
+# verify PATH
+temp=`echo $PATH|grep xud-simnet/scripts`
+if [ $? -ne 0 ]; then
+	echo "PATH is not properly set. Did you source setup.bash?"
+	exit 1
+fi
+# verify PATH
+temp=`echo $PATH|grep xud-simnet/go/bin`
+if [ $? -ne 0 ]; then
+	echo "PATH is not properly set. Did you source setup.bash?"
+	exit 1
+fi
+echo "found all pre-requisites"
+}
+
+
 make_dir () {
 if ! mkdir "$1"; then
 	echo "$1 already exists. Please run xud-simnet-clear to clean all leftovers before installing."
@@ -12,6 +74,7 @@ if ! cd ~/xud-simnet; then
 fi	
 
 source setup.bash
+check_prereq
 make_dir ~/xud-simnet/btcd
 make_dir ~/xud-simnet/ltcd
 make_dir ~/xud-simnet/lndbtc
