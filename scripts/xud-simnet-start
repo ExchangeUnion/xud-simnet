@@ -1,11 +1,63 @@
 #!/bin/bash
 
+
+gitit(){
+git fetch > /dev/null 2>&1
+status=`git status 2>&1`
+uptodate=`echo -n "${status}" 2> /dev/null | grep "Your branch is up-to-date" &> /dev/null; echo "$?"`
+if [ "${uptodate}" -eq "0" ]; then
+        return 0
+fi
+git reset --hard
+if [ $? -ne 0 ]; then
+        msg="git reset failed"
+        echo $msg
+        return 1
+fi
+git pull
+if [ $? -ne 0 ]; then
+        msg="git pull failed"
+        echo $msg
+        return 1
+fi
+npm install
+if [ $? -ne 0 ]; then
+        msg="npm install failed"
+        echo $msg
+        return 1
+fi
+npm run compile
+if [ $? -ne 0 ]; then
+        msg="XUD compile failed"
+        echo $msg
+        return 1
+fi
+status=`git status 2>&1`
+uptodate=`echo -n "${status}" 2> /dev/null | grep "Your branch is up-to-date" &> /dev/null; echo "$?"`
+if [ "${uptodate}" -ne "0" ]; then
+        msg="update FAILED!!!"
+        echo $msg
+        return 1
+fi
+msg="XUD project updated. Project is up to date now"
+echo "$msg"
+return 0
+}
+
+
 cd ~/xud-simnet
 shopt -s expand_aliases
 source setup.bash
 
 confirm_all_not_running
 
+cd xud
+gitit 
+if [ $? -ne 0 ]; then
+	return 1
+fi
+cd ..
+	
 echo "starting all processes"
 xname=`hostname`
 xname=${xname:0:28}
@@ -87,7 +139,7 @@ num="0"
 while true; do
 	if (("$num" > "$timeout"))
 	then
-		echo "lndltc didn't start properly"
+		echo "xud didn't start properly"
 		exit 1
 	fi
 	if  xucli getinfo 2>&1 |  grep block > /dev/null 2>&1; then
