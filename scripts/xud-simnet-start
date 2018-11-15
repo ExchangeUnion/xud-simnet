@@ -4,8 +4,8 @@
 gitit(){
 git fetch > /dev/null 2>&1
 status=`git status 2>&1`
-uptodate=`echo -n "${status}" 2> /dev/null | grep "Your branch is up-to-date" &> /dev/null; echo "$?"`
-if [ "${uptodate}" -eq "0" ]; then
+uptodate=`echo -n "${status}" 2> /dev/null | egrep "Your branch is up( |-)to( |-)date" &> /dev/null; echo "$?"`
+if [ "${uptodate}" -ne "0" ]; then
         return 0
 fi
 git reset --hard
@@ -33,8 +33,8 @@ if [ $? -ne 0 ]; then
         return 1
 fi
 status=`git status 2>&1`
-uptodate=`echo -n "${status}" 2> /dev/null | grep "Your branch is up-to-date" &> /dev/null; echo "$?"`
-if [ "${uptodate}" -ne "0" ]; then
+uptodate=`echo -n "${status}" 2> /dev/null | egrep "Your branch is up( |-)to( |-)date" &> /dev/null; echo "$?"`
+if [ "${uptodate}" -eq "0" ]; then
         msg="update FAILED!!!"
         echo $msg
         return 1
