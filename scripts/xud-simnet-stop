@@ -11,12 +11,12 @@ btcctl stop >/dev/null 2>&1
 ltcctl stop >/dev/null 2>&1
 sleep 5 
 
-killall node >/dev/null 2>&1
+kill $(ps aux | egrep 'node.*lndbtc'|awk '{print $2}') >/dev/null 2>&1
 killall lnd >/dev/null 2>&1
 killall btcd >/dev/null 2>&1
 killall ltcd >/dev/null 2>&1
 
-killall -9 node >/dev/null 2>&1
+kill -9 $(ps aux | egrep 'node.*lndbtc'|awk '{print $2}') >/dev/null 2>&1
 killall -9 lnd >/dev/null 2>&1
 killall -9 btcd >/dev/null 2>&1
 killall -9 ltcd >/dev/null 2>&1
