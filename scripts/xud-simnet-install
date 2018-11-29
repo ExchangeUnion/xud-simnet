@@ -63,7 +63,7 @@ echo "found all pre-requisites"
 
 make_dir () {
 if ! mkdir "$1"; then
-	echo "$1 already exists. Please run xud-simnet-clear to clean all leftovers before installing."
+	echo "$1 already exists. Please run xud-simnet-clean to clean all leftovers before installing."
 	exit 1
 fi
 }
