@@ -82,41 +82,41 @@ make_dir ~/xud-simnet/lndltc
 make_dir ~/xud-simnet/xud-wd
 
 #### glide
-if ! go get -u github.com/Masterminds/glide >/dev/null 2>&1; then
+if ! go get -u github.com/Masterminds/glide > /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to install glide"
 	exit 1
 fi 
 echo "glide installed"
 
 #### ltcd
-if ! git clone https://github.com/offerm/ltcd $GOPATH/src/github.com/ltcsuite/ltcd > /dev/null 2>&1; then
+if ! git clone https://github.com/offerm/ltcd $GOPATH/src/github.com/ltcsuite/ltcd >> /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to git clone ltcd"
 	exit 1
 fi
 cd $GOPATH/src/github.com/ltcsuite/ltcd
 echo "ltcd repo downloaded"
-if ! glide install > /dev/null 2>&1; then
+if ! glide install >> /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to build ltcd"
 	exit 1
 fi
-if ! go install . ./cmd/... > /dev/null 2>&1; then
+if ! go install . ./cmd/... >> /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to go instll ltcd"
 	exit 1
 fi  
  
 echo "ltcd installed"
 #### btcd
-if ! git clone https://github.com/ExchangeUnion/btcd $GOPATH/src/github.com/btcsuite/btcd > /dev/null 2>&1; then
+if ! git clone https://github.com/ExchangeUnion/btcd $GOPATH/src/github.com/btcsuite/btcd >> /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to git clone btcd"
 	exit 1
 fi
 cd $GOPATH/src/github.com/btcsuite/btcd
 echo "btcd repo downloaded"
-if ! glide install > /dev/null 2>&1;then
+if ! glide install >> /tmp/xud-simnet-install.log 2>&1;then
 	echo "unable to build btcd"
 	exit 1
 fi
-if ! go install . ./cmd/... > /dev/null 2>&1 ; then
+if ! go install . ./cmd/... >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to go instll btcd"
 	exit 1
 fi  
@@ -124,18 +124,18 @@ echo "btcd installed"
 
 
 #### lnd
-if ! git clone -b resolver+simnet-ltcd https://github.com/ExchangeUnion/lnd.git $GOPATH/src/github.com/lightningnetwork/lnd > /dev/null 2>&1;then
+if ! git clone -b resolver+simnet-ltcd https://github.com/ExchangeUnion/lnd.git $GOPATH/src/github.com/lightningnetwork/lnd >> /tmp/xud-simnet-install.log 2>&1;then
 	echo "unable to git clone lnd"
 	exit 1
 fi
 cd $GOPATH/src/github.com/lightningnetwork/lnd
 echo "lnd repo downloaded"
-if ! make  > /dev/null 2>&1 ; then
+if ! make  >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to make lnd"
 	exit 1
 fi
 echo "lnd compiled"
-if !  make install > /dev/null 2>&1 ; then
+if !  make install >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to make install lnd"
 	exit 1
 fi
@@ -143,16 +143,16 @@ echo "lnd installed"
 
 #### xud
 cd ~/xud-simnet
-if ! git clone https://github.com/ExchangeUnion/xud.git > /dev/null 2>&1; then
+if ! git clone https://github.com/ExchangeUnion/xud.git >> /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to git clone xud"
 	exit 1
 fi
 cd xud
-if ! npm install > /dev/null 2>&1 ; then
+if ! npm install >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to npm install xud"
 	exit 1
 fi
-if ! npm run compile > /dev/null 2>&1 ; then
+if ! npm run compile >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to build xud"
 	exit 1
 fi
