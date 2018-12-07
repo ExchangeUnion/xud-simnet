@@ -1,0 +1,4 @@
+#!/bin/bash
+
+xud-simnet-stop
+xud-simnet-start
