@@ -22,7 +22,8 @@ then
 	exit 1
 fi
 
-confirm_all_not_running
+#confirm_all_not_running
+xud-simnet-stop
 
 delete_dir "btcd"
 delete_dir "ltcd"
