@@ -61,7 +61,7 @@ cd ..
 echo "starting all processes"
 xname=`hostname`
 xname=${xname:0:28}
-timeout="30"
+timeout="120"
 #### btcd
 cd ~/xud-simnet/btcd
 nohup btcd -C ./btcd.conf --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:18555 --rpcuser=xu --rpcpass=xu  --rpclisten 127.0.0.1:18556 --nolisten --rpccert=./rpc.cert --rpckey=./rpc.key> /dev/null 2>&1 &
