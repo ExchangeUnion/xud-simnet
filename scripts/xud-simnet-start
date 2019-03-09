@@ -134,7 +134,7 @@ done
 echo "lndltc started"
 #### Starting xud
 cd ~/xud-simnet/xud-wd
-nohup xud --raiden.disable --lndbtc.nomacaroons --lndbtc.port 10002 --lndltc.nomacaroons --lndltc.port 10001 -x . > /dev/null 2>&1 &
+nohup xud --raiden.disable --lnd.btc.nomacaroons --lnd.btc.port 10002 --lnd.ltc.nomacaroons --lnd.ltc.port 10001 -x . > /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))
