@@ -29,7 +29,7 @@ lndbtc-lncli connect $connectstr:10012
 
 let server="$RANDOM % 3 +1"
 let head="$server*5"
-connectstr=`xucli listpeers|egrep -A1 '"LTC"|address'|head -n 5|sed -e 1b -e '$!d'|cut -d ":" -f 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -`
+connectstr=`xucli listpeers|egrep -A1 '"LTC"|address'|head -n $head|tail -n 5|sed -e 1b -e '$!d'|cut -d ":" -f 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -`
 echo "open channel with $connectstr"
 lndltc-lncli connect $connectstr:10011
 
