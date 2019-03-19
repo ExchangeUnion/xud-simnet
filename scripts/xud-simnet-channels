@@ -53,4 +53,4 @@ while true; do
 done
 echo -e "\nLTC channel is active"
 
-echo "xud is ready to trade!"
+echo "xud is ready!"
