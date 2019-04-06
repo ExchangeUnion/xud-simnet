@@ -22,14 +22,14 @@ xucli connect 03fd337659e99e628d0487e4f87acf93e353db06f754dccc402f2de1b857a319d0
 
 let server="$RANDOM % 3 +1"
 let head="$server*2"
-connectstr=`xucli listpeers|egrep -A1 '"BTC"|address'|sed -n '1~6p;5~6p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
+connectstr=`xucli listpeers|egrep -A1 '"BTC"|address'|sed -n '1p;7p;13p;5p;11p;17p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
 echo "open channel with $connectstr"
 lndbtc-lncli connect $connectstr:10012
 
 
 let server="$RANDOM % 3 +1"
 let head="$server*2"
-connectstr=`xucli listpeers|egrep -A1 '"LTC"|address'|sed -n '1~6p;5~6p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
+connectstr=`xucli listpeers|egrep -A1 '"LTC"|address'|sed -n '1p;7p;13p;5p;11p;17p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
 echo "open channel with $connectstr"
 lndltc-lncli connect $connectstr:10011
 
