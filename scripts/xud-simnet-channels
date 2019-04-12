@@ -33,7 +33,7 @@ connectstr=`xucli listpeers|egrep -A1 '"LTC"|address'|sed -n '1p;7p;13p;5p;11p;1
 echo "open channel with $connectstr"
 lndltc-lncli connect $connectstr:10011
 
-echo "waiting for see active BTC channels"
+echo "waiting for BTC channel to be active"
 while true; do
         echo -n "."
         if  lndbtc-lncli listchannels 2>&1 |grep active > /dev/null 2>&1; then
@@ -43,7 +43,7 @@ while true; do
 done
 echo -e "\nBTC channel is active"
 
-echo "waiting for see active LTC channels"
+echo "waiting for LTC channel to be active"
 while true; do
         echo -n "."
         if  lndltc-lncli listchannels 2>&1 |grep active > /dev/null 2>&1; then
@@ -53,4 +53,4 @@ while true; do
 done
 echo -e "\nLTC channel is active"
 
-echo "Xud system is ready!"
+echo "xud is ready!"
