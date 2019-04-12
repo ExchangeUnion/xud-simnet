@@ -1,0 +1,52 @@
+#!/bin/bash
+
+check_dependencies() {
+  if ! command -v python3.7
+  then
+    echo "python3.7 is missing"
+    exit 1
+  fi
+  if ! command -v pip3.7
+  then
+    echo "pip3.7 is missing"
+    exit 1
+  fi
+  if ! command -v virtualenv
+  then
+    echo "virtualenv is missing"
+    exit 1
+  fi
+  if ! command -v solc
+  then
+    echo "solc is missing"
+    exit 1
+  fi
+  echo "found all dependencies for Raiden"
+}
+
+make_dir () {
+if ! mkdir "$1"; then
+	echo "$1 already exists. Please run xud-simnet-clean to clean all leftovers before installing."
+	exit 1
+fi
+}
+
+check_dependencies
+#### raiden
+if ! git clone -b external-secret-resolver https://github.com/offerm/raiden.git ~/xud-simnet/raiden >> /tmp/xud-simnet-install.log 2>&1; then
+	echo "unable to git clone raiden"
+	exit 1
+fi
+cd ~/xud-simnet/raiden || exit 1
+make_dir ~/xud-simnet/raiden-wd
+virtualenv ~/xud-simnet/raiden-wd/venv
+source ~/xud-simnet/raiden-wd/venv/bin/activate
+if ! pip3.7 install -c constraints.txt --upgrade -r requirements-dev.txt >> /tmp/xud-simnet-install.log 2>&1;then
+	echo "unable to install requirements for raiden"
+	exit 1
+fi
+if ! python3.7 setup.py develop >> /tmp/xud-simnet-install.log 2>&1;then
+	echo "unable to install raiden"
+	exit 1
+fi
+echo "raiden installed!"

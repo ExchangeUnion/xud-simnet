@@ -156,8 +156,6 @@ if ! npm run compile >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to build xud"
 	exit 1
 fi
+#~/xud-simnet/scripts/xud-simnet-install-raiden
 echo "xud installed"
 echo "Ready!"
-
-
-
