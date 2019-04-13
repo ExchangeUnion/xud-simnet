@@ -6,20 +6,20 @@ check_dependencies() {
     echo "python3.7 is missing"
     exit 1
   fi
-  if ! command -v pip3.7
-  then
-    echo "pip3.7 is missing"
-    exit 1
-  fi
-  if ! command -v virtualenv
-  then
-    echo "virtualenv is missing"
-    exit 1
-  fi
+#  if ! command -v pip3.7
+#  then
+#    echo "pip3.7 is missing"
+#    exit 1
+#  fi
+#  if ! command -v virtualenv
+#  then
+#    echo "virtualenv is missing"
+#    exit 1
+#  fi
   if ! command -v solc
   then
-    echo "solc is missing"
-    exit 1
+    echo "solc is missing - ignored for now"
+#    exit 1
   fi
   echo "found all dependencies for Raiden"
 }
@@ -33,20 +33,37 @@ fi
 
 check_dependencies
 #### raiden
-if ! git clone -b external-secret-resolver https://github.com/offerm/raiden.git ~/xud-simnet/raiden >> /tmp/xud-simnet-install.log 2>&1; then
+echo "git clone raiden"
+if ! git clone -b external-secret-resolver-take-two https://github.com/offerm/raiden.git ~/xud-simnet/raiden >> /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to git clone raiden"
 	exit 1
 fi
-cd ~/xud-simnet/raiden || exit 1
 make_dir ~/xud-simnet/raiden-wd
-virtualenv ~/xud-simnet/raiden-wd/venv
+#virtualenv ~/xud-simnet/raiden-wd/venv
+#cd ~/xud-simnet/raiden-wd || exit 1
+echo "create virtual environment"
+python3.7 -m venv  ~/xud-simnet/raiden-wd/venv
+
 source ~/xud-simnet/raiden-wd/venv/bin/activate
-if ! pip3.7 install -c constraints.txt --upgrade -r requirements-dev.txt >> /tmp/xud-simnet-install.log 2>&1;then
+
+cd ~/xud-simnet/raiden
+
+echo "upgrade pip"
+if ! pip install --upgrade pip >> /tmp/xud-simnet-install.log 2>&1;then
+	echo "unable to upgrade pip"
+	exit 1
+fi
+
+echo "install requirements"
+if ! pip install -c constraints.txt --upgrade -r requirements.txt >> /tmp/xud-simnet-install.log 2>&1;then
 	echo "unable to install requirements for raiden"
 	exit 1
 fi
-if ! python3.7 setup.py develop >> /tmp/xud-simnet-install.log 2>&1;then
+
+echo "setup raiden"
+if ! python setup.py develop >> /tmp/xud-simnet-install.log 2>&1;then
 	echo "unable to install raiden"
 	exit 1
 fi
+
 echo "raiden installed!"
