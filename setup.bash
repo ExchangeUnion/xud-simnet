@@ -1,3 +1,26 @@
+function activate_venv {
+ source ~/xud-simnet/raiden-wd/venv/bin/activate
+}
+
+function deactivate_venv {
+	deactivate
+	
+}
+
+make_dir () {
+if ! mkdir "$1"; then
+	echo "$1 already exists. Please run xud-simnet-clean to clean all leftovers before installing."
+	exit 1
+fi
+}
+
+delete_dir() {
+	if ! rm -rf  $1 >/dev/null 2>&1; then
+		echo "unable to delete directory $1"
+		exit 1
+	fi
+	return 0
+}
 
 function is_running {
 if pgrep -f  "$1" > /dev/null

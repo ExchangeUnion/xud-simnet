@@ -1,0 +1,28 @@
+#!/bin/bash
+
+cd ~/xud-simnet
+shopt -s expand_aliases
+source setup.bash
+
+activate_venv
+
+EndpointRegistry="0xC6473F30efA55b957b1472283e0a55B1C9F8022C"
+SecretRegistry="0xa1FE999a966d90b74Fad9DdFf2BD3baDA50cDA79"
+TokenNetworkRegistry="0x81E09B9Ba95c9D1fcC6Be59D7798eFB8E1EF342E"
+env="production"
+
+address_file=~/xud-simnet/raiden-wd/address
+if [ ! -f $address_file ]; then
+	echo "raiden was not properlly installed"
+	exit 1
+fi
+tail -1 $address_file
+address=`grep "Address" $address_file |cut -d " " -f 2`
+passwd_file=~/xud-simnet/raiden-wd/passwd_file
+datadir=~/xud-simnet/raiden-wd/exchange
+keystore=~/xud-simnet/raiden-wd/keystore
+
+cd  ~/xud-simnet/raiden-wd
+raiden --datadir $datadir --keystore-path $keystore  --network-id 4321 --accept-disclaimer --address $address --rpc --api-address 0.0.0.0:5001 --environment-type $env  --password-file $passwd_file --no-sync-check --accept-disclaimer --tokennetwork-registry-contract-address $TokenNetworkRegistry --secret-registry-contract-address $SecretRegistry --endpoint-registry-contract-address $EndpointRegistry --gas-price 10000000000 --eth-rpc-endpoint 35.231.222.142:8546 
+
+deactivate
