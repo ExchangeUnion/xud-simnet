@@ -47,6 +47,7 @@ confirm_not_running "ltcd" "ltcd.*19555"
 confirm_not_running "lndbtc" "lnd.*10012"
 confirm_not_running "lndltc" "lnd.*10011"
 confirm_not_running "xud" "node.*10002.*10001"
+confirm_not_running "raiden" "raiden.*4321.*5001"
 }
 
 
