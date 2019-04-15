@@ -33,6 +33,11 @@ if [ $? -ne 0 ]; then
 	echo "python is missing"
 	exit 1
 fi
+if ! command -v python3.7
+ then
+   echo "python3.7 is missing"
+   exit 1
+fi
 # verify killall
 temp=`which killall`
 if [ $? -ne 0 ]; then
@@ -156,6 +161,6 @@ if ! npm run compile >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to build xud"
 	exit 1
 fi
-#~/xud-simnet/scripts/xud-simnet-install-raiden
+~/xud-simnet/scripts/xud-simnet-install-raiden
 echo "xud installed"
 echo "Ready!"
