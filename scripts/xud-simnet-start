@@ -51,10 +51,15 @@ source setup.bash
 
 confirm_all_not_running
 
+if [ ! -f raiden-wd/address ]; then
+	echo "Raiden was not properly installed. Please run xud-simnet-clear-raiden and xud-simnet-install-raiden"
+	exit 1
+fi
+
 cd xud
 gitit 
 if [ $? -ne 0 ]; then
-	return 1
+	exit 1
 fi
 cd ..
 	
