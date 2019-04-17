@@ -1,0 +1,22 @@
+#!/bin/bash
+
+cd ~/xud-simnet
+
+shopt -s expand_aliases
+source setup.bash
+
+## $token is not currently using the dynamic value
+#token=`curl -i -s http://localhost:5001/api/v1/tokens|grep "\["|cut -d '"' -f 2`
+token="0x4c354C76d5f73A63a90Be776897DC81Fb6238772"
+
+if ! xucli listpairs|grep "WETH/BTC" > /dev/null 2>&1 ; then
+	xucli removepair WETH/BTC > /dev/null 2>&1
+	xucli removecurrency WETH > /dev/null 2>&1
+	xucli addcurrency WETH Raiden 18 $token > /dev/null 2>&1
+	echo "Currency WETH($token) created"
+	xucli addpair WETH BTC > /dev/null 2>&1
+	echo "Pair WETH/BTC added"
+	echo "Restaring xud"
+	xud-simnet-xud-restart
+fi
+

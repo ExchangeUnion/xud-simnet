@@ -1,0 +1,16 @@
+#!/bin/bash
+cd ~/xud-simnet
+
+shopt -s expand_aliases
+source setup.bash
+
+# ensure xud stops
+xucli shutdown > /dev/null 2>&1
+sleep 1
+kill $(ps aux | egrep 'node.*lndbtc|node.*lnd.BTC'|awk '{print $2}') >/dev/null 2>&1
+sleep 1
+kill -9  $(ps aux | egrep 'node.*lndbtc|node.*lnd.BTC'|awk '{print $2}') >/dev/null 2>&1
+
+# start xud 
+cd ~/xud-simnet/xud-wd
+nohup xud --lnd.BTC.nomacaroons --lnd.BTC.port 10002 --lnd.LTC.nomacaroons --lnd.LTC.port 10001 -x . > /dev/null 2>&1  &
