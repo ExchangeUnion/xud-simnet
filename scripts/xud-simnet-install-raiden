@@ -1,11 +1,16 @@
 #!/bin/bash
 
 check_dependencies() {
-  if ! command -v python3.7
+  if ! command -v python3.7 > /dev/null 2>&1
   then
     echo "python3.7 is missing"
     exit 1
   fi
+  if ! python3.7 -c "import venv" > /dev/null 2>&1
+  then
+	echo "virtual environment support is missing"
+	exit 1
+  fi	
 #  if ! command -v solc
 #  then
 #    echo "solc is missing - ignored for now"
