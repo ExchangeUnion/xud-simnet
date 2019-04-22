@@ -11,6 +11,11 @@ check_dependencies() {
 	echo "virtual environment support is missing"
 	exit 1
   fi	
+  if ! python3.7 -c "import ensurepip" > /dev/null 2>&1
+  then
+	echo "ensurepip is missing. Did you install python3.7-dev ?"
+	exit 1
+  fi
 #  if ! command -v solc
 #  then
 #    echo "solc is missing - ignored for now"
