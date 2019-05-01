@@ -23,6 +23,6 @@ datadir=~/xud-simnet/raiden-wd/exchange
 keystore=~/xud-simnet/raiden-wd/keystore
 
 cd  ~/xud-simnet/raiden-wd
-raiden --datadir $datadir --keystore-path $keystore  --network-id 4321 --accept-disclaimer --address $address --rpc --api-address 0.0.0.0:5001 --environment-type $env  --password-file $passwd_file --no-sync-check --accept-disclaimer --tokennetwork-registry-contract-address $TokenNetworkRegistry --secret-registry-contract-address $SecretRegistry --endpoint-registry-contract-address $EndpointRegistry --gas-price 10000000000 --eth-rpc-endpoint 35.231.222.142:8546 
+raiden --datadir $datadir --keystore-path $keystore  --network-id 4321 --accept-disclaimer --address $address --rpc --api-address 0.0.0.0:5001 --environment-type $env  --password-file $passwd_file --no-sync-check --accept-disclaimer --tokennetwork-registry-contract-address $TokenNetworkRegistry --secret-registry-contract-address $SecretRegistry --endpoint-registry-contract-address $EndpointRegistry --gas-price 10000000000 --eth-rpc-endpoint 35.231.222.142:8546  --matrix-server https://raidentransport.exchangeunion.com
 
 deactivate
