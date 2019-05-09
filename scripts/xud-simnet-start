@@ -200,7 +200,7 @@ while true; do
 		echo "xud didn't start properly. No litecoin support"
 		exit 1
 	fi
-	if  xucli getinfo 2>&1 |  grep litecoin > /dev/null 2>&1; then
+	if  xucli getinfo 2>&1 |  egrep "litecoin|LTC" > /dev/null 2>&1; then
 		break	
 	fi
 	sleep 1
@@ -213,7 +213,7 @@ while true; do
 		echo "xud didn't start properly. No bitcoin support"
 		exit 1
 	fi
-	if  xucli getinfo 2>&1 |  grep bitcoin > /dev/null 2>&1; then
+	if  xucli getinfo 2>&1 |  egrep "bitcoin|BTC" > /dev/null 2>&1; then
 		break	
 	fi
 	sleep 1
