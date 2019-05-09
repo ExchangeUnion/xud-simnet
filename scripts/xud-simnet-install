@@ -127,15 +127,14 @@ if ! go install . ./cmd/... >> /tmp/xud-simnet-install.log 2>&1 ; then
 fi  
 echo "btcd installed"
 
-
 #### lnd
-if ! git clone -b resolver+simnet-ltcd https://github.com/ExchangeUnion/lnd.git $GOPATH/src/github.com/lightningnetwork/lnd >> /tmp/xud-simnet-install.log 2>&1;then
+if ! git clone -b v0.6.1-beta-rc2 --depth 1 https://github.com/lightningnetwork/lnd $GOPATH/src/github.com/lightningnetwork/lnd >> /tmp/xud-simnet-install.log 2>&1;then
 	echo "unable to git clone lnd"
 	exit 1
 fi
 cd $GOPATH/src/github.com/lightningnetwork/lnd
 echo "lnd repo downloaded"
-if ! make  >> /tmp/xud-simnet-install.log 2>&1 ; then
+if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to make lnd"
 	exit 1
 fi

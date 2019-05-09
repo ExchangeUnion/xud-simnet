@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd $GOPATH/src/github.com/lightningnetwork/lnd
+git remote set-url origin https://github.com/lightningnetwork/lnd.git
+git fetch --all --tags --prune
+if ! git checkout tags/v0.6.1-beta-rc2; then
+	echo "unable to git checkout lnd tag"
+	exit 1
+fi
+
+make clean
+if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to make lnd"
+	exit 1
+fi
+echo "lnd compiled"
+if !  make install >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to make install lnd"
+	exit 1
+fi
+echo "lnd installed"
