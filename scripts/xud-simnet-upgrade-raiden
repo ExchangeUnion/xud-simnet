@@ -1,0 +1,72 @@
+#!/bin/bash
+
+check_dependencies() {
+  if ! command -v python3.7 > /dev/null 2>&1
+  then
+    echo "python3.7 is missing"
+    exit 1
+  fi
+  if ! python3.7 -c "import venv" > /dev/null 2>&1
+  then
+	echo "virtual environment support is missing"
+	exit 1
+  fi	
+  if ! python3.7 -c "import ensurepip" > /dev/null 2>&1
+  then
+	echo "ensurepip is missing. Did you install python3.7-dev ?"
+	exit 1
+  fi
+  if [ ! -d ~/xud-simnet/raiden ]; then
+	echo "please install raiden first"
+	exit 1
+  fi
+  if [ ! -d ~/xud-simnet/raiden-wd ]; then
+	echo "please install raiden first"
+	exit 1
+  fi
+#  if ! command -v solc
+#  then
+#    echo "solc is missing - ignored for now"
+##    exit 1
+#  fi
+  echo "found all dependencies for Raiden"
+}
+
+check_dependencies
+
+cd ~/xud-simnet
+source setup.bash
+
+#### raiden
+echo "fetch updates from github"
+cd raiden
+if ! git pull  >> /tmp/xud-simnet-install.log 2>&1; then
+	echo "unable to git clone raiden"
+	exit 1
+fi
+
+activate_venv
+
+cd ~/xud-simnet/raiden
+
+echo "upgrade pip"
+if ! pip install --upgrade pip >> /tmp/xud-simnet-install.log 2>&1;then
+	echo "unable to upgrade pip"
+	exit 1
+fi
+
+echo "install requirements"
+if ! pip install -c constraints.txt --upgrade -r requirements.txt >> /tmp/xud-simnet-install.log 2>&1;then
+	echo "unable to install requirements for raiden"
+	exit 1
+fi
+
+echo "setup raiden"
+if ! python setup.py develop >> /tmp/xud-simnet-install.log 2>&1;then
+	echo "unable to install raiden"
+	exit 1
+fi
+
+deactivate_venv
+
+echo "raiden updated!"
