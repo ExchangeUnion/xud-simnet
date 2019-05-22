@@ -139,7 +139,7 @@ if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-
 	exit 1
 fi
 echo "lnd compiled"
-if !  make install >> /tmp/xud-simnet-install.log 2>&1 ; then
+if !  make install tags="invoicesrpc" >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to make install lnd"
 	exit 1
 fi
