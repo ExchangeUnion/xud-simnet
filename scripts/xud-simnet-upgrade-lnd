@@ -7,6 +7,8 @@ if ! git checkout tags/v0.6.1-beta-rc2; then
 	echo "unable to git checkout lnd tag"
 	exit 1
 fi
+git reset --hard
+git apply ~/xud-simnet/scripts/limits.patch
 
 make clean
 if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-install.log 2>&1 ; then
