@@ -1,13 +1,13 @@
 #!/bin/bash
 
 cd $GOPATH/src/github.com/lightningnetwork/lnd
+git reset --hard
 git remote set-url origin https://github.com/lightningnetwork/lnd.git
 git fetch --all --tags --prune
 if ! git checkout tags/v0.6.1-beta-rc2; then
 	echo "unable to git checkout lnd tag"
 	exit 1
 fi
-git reset --hard
 git apply ~/xud-simnet/scripts/limits.patch
 
 make clean

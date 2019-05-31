@@ -15,14 +15,11 @@ xud-simnet-stop
 git fetch
 git pull
 
-xud-simnet-upgrade-lnd
-
 rm -rf ltcd/logs
 rm -rf ltcd/data
 rm -rf lndltc/data
 rm -rf lndltc/logs
 
-echo "ready now. Starting xud-simnet."
+echo "LTCD cleaned."
 
-xud-simnet-start
 

@@ -13,4 +13,4 @@ kill -9  $(ps aux | egrep 'node.*lndbtc|node.*lnd.BTC'|awk '{print $2}') >/dev/n
 
 # start xud 
 cd ~/xud-simnet/xud-wd
-nohup xud --lnd.BTC.nomacaroons --lnd.BTC.port 10002 --lnd.LTC.nomacaroons --lnd.LTC.port 10001 -x . > /dev/null 2>&1  &
+nohup xud --nosanitychecks true --lnd.BTC.nomacaroons --lnd.BTC.port 10002 --lnd.LTC.nomacaroons --lnd.LTC.port 10001 -x . > /dev/null 2>&1  &
