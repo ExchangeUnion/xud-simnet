@@ -5,14 +5,25 @@ cd ~/xud-simnet
 shopt -s expand_aliases
 source setup.bash
 
-if ! xud-simnet-stop
-then
-	echo "failed to stop processes"
-	exit 1
+needBTC=1
+if  ! lndbtc-lncli getinfo|grep '"num_active_channels": 0,' > /dev/null 2>&1; then
+	echo "active BTC channel found"
+     	needBTC=0
 fi
-if ! xud-simnet-start
-then 
-	echo "failed to start processes"
+if  ! lndbtc-lncli getinfo|grep '"num_pending_channels": 0,' > /dev/null 2>&1; then
+	echo "pending BTC channel found"
+     	needBTC=2
+fi
+needLTC=1
+if  ! lndltc-lncli getinfo|grep '"num_active_channels": 0,' > /dev/null 2>&1; then
+	echo "active LTC channel found"
+     	needLTC=0
+fi
+if  ! lndltc-lncli getinfo|grep '"num_pending_channels": 0,' > /dev/null 2>&1; then
+	echo "pending LTC channel found"
+     	needLTC=2
+fi
+if [ "$needBTC" = 0 ] && [ "$needLTC" = 0 ]; then
 	exit 1
 fi
 # ensure connection to test nodes
@@ -20,18 +31,23 @@ xucli connect 02b66438730d1fcdf4a4ae5d3d73e847a272f160fee2938e132b52cab0a0d9cfc6
 xucli connect 028599d05b18c0c3f8028915a17d603416f7276c822b6b2d20e71a3502bd0f9e0a@35.231.171.148:8885 >/dev/null 2>&1
 xucli connect 03fd337659e99e628d0487e4f87acf93e353db06f754dccc402f2de1b857a319d0@35.229.81.83:8885 >/dev/null 2>&1
 
-let server="$RANDOM % 3 +1"
-let head="$server*2"
-connectstr=`xucli listpeers|egrep -A1 '"BTC"|address'|sed -n '1p;7p;13p;5p;11p;17p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
-echo "open channel with $connectstr"
-lndbtc-lncli connect $connectstr:10012
+if [ "$needBTC" = 1 ]; then
+	echo "Openning BTC channel"
+	let server="$RANDOM % 3 +1"
+	let head="$server*2"
+	connectstr=`xucli listpeers|egrep -A1 '"BTC"|address'|sed -n '1p;7p;13p;5p;11p;17p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
+	echo "open channel with $connectstr"
+	lndbtc-lncli connect $connectstr:10012
+fi
 
-
-let server="$RANDOM % 3 +1"
-let head="$server*2"
-connectstr=`xucli listpeers|egrep -A1 '"LTC"|address'|sed -n '1p;7p;13p;5p;11p;17p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
-echo "open channel with $connectstr"
-lndltc-lncli connect $connectstr:10011
+if [ "$needLTC" = 1 ]; then
+	echo "Openning LTC channel"
+	let server="$RANDOM % 3 +1"
+	let head="$server*2"
+	connectstr=`xucli listpeers|egrep -A1 '"LTC"|address'|sed -n '1p;7p;13p;5p;11p;17p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
+	echo "open channel with $connectstr"
+	lndltc-lncli connect $connectstr:10011
+fi
 
 echo "waiting for BTC channel to be active"
 while true; do
@@ -53,4 +69,4 @@ while true; do
 done
 echo -e "\nLTC channel is active"
 
-echo "xud is ready!"
+echo "xud channels are ready!"

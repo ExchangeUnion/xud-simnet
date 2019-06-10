@@ -220,5 +220,7 @@ while true; do
 	num=$[$num + 1]
 done
 xud-simnet-set-WETH
+xud-simnet-channels
+
 
 echo "Ready!"

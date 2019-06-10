@@ -33,6 +33,7 @@ delete_dir "xud"
 delete_dir "xud-wd"
 delete_dir "raiden-wd"
 delete_dir "raiden"
+chmod -R 755  go
 delete_dir "go"
 echo "Done. You can now use xud-simnet-install"
 
