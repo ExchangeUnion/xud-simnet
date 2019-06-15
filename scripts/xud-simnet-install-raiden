@@ -33,7 +33,7 @@ make_dir ~/xud-simnet/raiden-wd
 
 #### raiden
 echo "git clone raiden"
-if ! git clone -b external-secret-resolver-take-two https://github.com/offerm/raiden.git ~/xud-simnet/raiden >> /tmp/xud-simnet-install.log 2>&1; then
+if ! git clone -b from-master-restore https://github.com/offerm/raiden.git ~/xud-simnet/raiden >> /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to git clone raiden"
 	exit 1
 fi
