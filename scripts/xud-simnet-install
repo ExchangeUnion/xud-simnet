@@ -80,7 +80,7 @@ fi
 
 source setup.bash
 check_prereq
-#make_dir ~/xud-simnet/btcd
+make_dir ~/xud-simnet/btcd
 make_dir ~/xud-simnet/ltcd
 make_dir ~/xud-simnet/lndbtc
 make_dir ~/xud-simnet/lndltc
@@ -112,22 +112,22 @@ fi
  
 echo "ltcd installed"
 #### btcd
-#if ! git clone https://github.com/btcsuite/btcd.git $GOPATH/src/github.com/btcsuite/btcd >> /tmp/xud-simnet-install.log 2>&1; then
-#	echo "unable to git clone btcd"
-#	exit 1
-#fi
-#cd $GOPATH/src/github.com/btcsuite/btcd
-#echo "btcd repo downloaded"
-#if ! git apply ~/xud-simnet/scripts/btcd.patch >> /tmp/xud-simnet-install.log 2>&1 ; then
-#	echo "unable to apply btcd pacth"
-#	exit 1
-#fi
-#echo "btcd patched"
-#if ! GO111MODULE=on go install -v . ./cmd/...  >> /tmp/xud-simnet-install.log 2>&1 ; then
-#	echo "unable to go instll btcd"
-#	exit 1
-#fi  
-#echo "btcd installed"
+if ! git clone https://github.com/btcsuite/btcd.git $GOPATH/src/github.com/btcsuite/btcd >> /tmp/xud-simnet-install.log 2>&1; then
+	echo "unable to git clone btcd"
+	exit 1
+fi
+cd $GOPATH/src/github.com/btcsuite/btcd
+echo "btcd repo downloaded"
+if ! git apply ~/xud-simnet/scripts/btcd.patch >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to apply btcd pacth"
+	exit 1
+fi
+echo "btcd patched"
+if ! GO111MODULE=on go install -v . ./cmd/...  >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to go instll btcd"
+	exit 1
+fi  
+echo "btcd installed"
 
 #### lnd
 if ! git clone -b v0.6.1-beta https://github.com/lightningnetwork/lnd $GOPATH/src/github.com/lightningnetwork/lnd >> /tmp/xud-simnet-install.log 2>&1;then
