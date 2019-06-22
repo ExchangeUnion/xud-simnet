@@ -6,9 +6,9 @@ source setup.bash
 
 activate_venv
 
-EndpointRegistry="0xC6473F30efA55b957b1472283e0a55B1C9F8022C"
-SecretRegistry="0xa1FE999a966d90b74Fad9DdFf2BD3baDA50cDA79"
-TokenNetworkRegistry="0x81E09B9Ba95c9D1fcC6Be59D7798eFB8E1EF342E"
+EndpointRegistry="0xe81091B6a83DC5479c99169ab0adB7092B8f0411"
+SecretRegistry="0xddFecc25B8F834D14601A7e2359FB25189994cEE"
+TokenNetworkRegistry="0x3A17B96809258523c4DED8e7F3f9364D13eBc2C5"
 env="production"
 
 address_file=~/xud-simnet/raiden-wd/address
