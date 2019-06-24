@@ -68,22 +68,22 @@ xname=`hostname`
 xname=${xname:0:28}
 timeout="120"
 #### btcd
-cd ~/xud-simnet/btcd
-nohup btcd -C ./btcd.conf --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:28555 --rpcuser=xu --rpcpass=xu  --rpclisten 127.0.0.1:18556 --nolisten --rpccert=./rpc.cert --rpckey=./rpc.key> /dev/null 2>&1 &
-num="0"
-while true; do
-	if (("$num" > "$timeout"))
-	then
-		echo "btcd didn't start properly"
-		exit 1
-	fi
-	if  btcctl getinfo 2>&1 |  grep blocks > /dev/null 2>&1; then
-		break	
-	fi
-	sleep 1
-	num=$[$num + 1]
-done
-echo "btcd started"
+#cd ~/xud-simnet/btcd
+#nohup btcd -C ./btcd.conf --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:28555 --rpcuser=xu --rpcpass=xu  --rpclisten 127.0.0.1:18556 --nolisten --rpccert=./rpc.cert --rpckey=./rpc.key> /dev/null 2>&1 &
+#num="0"
+#while true; do
+#	if (("$num" > "$timeout"))
+#	then
+#		echo "btcd didn't start properly"
+#		exit 1
+#	fi
+#	if  btcctl getinfo 2>&1 |  grep blocks > /dev/null 2>&1; then
+#		break	
+#	fi
+#	sleep 1
+#	num=$[$num + 1]
+#done
+#echo "btcd started"
 #### ltcd
 cd ~/xud-simnet/ltcd
 nohup ltcd -C ./btcd.conf --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:29555 --rpcuser=xu --rpcpass=xu --rpclisten=127.0.0.1:19556 --nolisten --rpccert=./rpc.cert --rpckey=./rpc.key> /dev/null 2>&1 &
@@ -104,7 +104,7 @@ echo "ltcd started"
 #### lndbtc
 cd ~/xud-simnet/lndbtc
 cert=~/xud-simnet/btcd/rpc.cert
-nohup lnd --noseedbackup --rpclisten=127.0.0.1:10002 --listen=127.0.0.1:10012 --restlisten=8002 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --bitcoin.active --bitcoin.simnet  --btcd.rpcuser=xu --btcd.rpcpass=xu --debuglevel=debug --alias="BTC@$xname" --btcd.rpchost=127.0.0.1:18556  --btcd.rpccert=$cert --bitcoin.node btcd  --neutrino.connect 35.231.222.142:28555 > /dev/null 2>&1 &
+nohup lnd --noseedbackup --rpclisten=127.0.0.1:10002 --listen=127.0.0.1:10012 --restlisten=8002 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --bitcoin.active --bitcoin.simnet  --btcd.rpcuser=xu --btcd.rpcpass=xu --debuglevel=debug --alias="BTC@$xname" --btcd.rpchost=127.0.0.1:18556  --btcd.rpccert=$cert --bitcoin.node neutrino  --neutrino.connect 35.231.222.142:38555 > /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))

@@ -145,6 +145,25 @@ if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-
 	echo "unable to make lnd"
 	exit 1
 fi
+# patch neutrino to for minimal difficulty
+neupath=`grep neutrino go.mod|sed -e 's/^[[:space:]]*//'`
+neupath=`echo "${neupath/ /@}"`
+cd $GOPATH/pkg/mod/$neupath
+cd ..
+chmod +w *
+cd $GOPATH/pkg/mod/$neupath
+chmod +w blockmanager.go
+if ! patch  <~/xud-simnet/scripts/neutrino.patch ; then
+	echo "unable to patch neutrion"
+	exit 1
+fi
+echo "neutrino patched"
+
+cd $GOPATH/src/github.com/lightningnetwork/lnd
+if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to make lnd after neutrino patch"
+	exit 1
+fi
 echo "lnd compiled"
 if !  make install tags="invoicesrpc" >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to make install lnd"
