@@ -130,47 +130,40 @@ echo "ltcd installed"
 #echo "btcd installed"
 
 #### lnd
-if ! git clone -b v0.6.1-beta https://github.com/lightningnetwork/lnd $GOPATH/src/github.com/lightningnetwork/lnd >> /tmp/xud-simnet-install.log 2>&1;then
-	echo "unable to git clone lnd"
-	exit 1
-fi
-cd $GOPATH/src/github.com/lightningnetwork/lnd
-echo "lnd repo downloaded"
-if ! git apply ~/xud-simnet/scripts/limits.patch >> /tmp/xud-simnet-install.log 2>&1 ; then
-	echo "unable to apply lnd limit pacth"
-	exit 1
-fi
-echo "lnd patched"
-if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-install.log 2>&1 ; then
-	echo "unable to make lnd"
-	exit 1
-fi
-# patch neutrino to for minimal difficulty
-neupath=`grep neutrino go.mod|sed -e 's/^[[:space:]]*//'`
-neupath=`echo "${neupath/ /@}"`
-cd $GOPATH/pkg/mod/$neupath
-cd ..
-chmod +w *
-cd $GOPATH/pkg/mod/$neupath
+cd /tmp
+rm -rf lnd
+mkdir lnd
+cd lnd
+cp ~/xud-simnet/lnd-v0.6.1-beta/*.tar.gz .
+tar -xzf vendor.tar.gz
+tar -xzf lnd-source-v0.6.1-beta.tar.gz
+	
+git apply ~/xud-simnet/scripts/limits.patch
+echo "lnd limits patched"
+
+cd /tmp/lnd/vendor/github.com/lightninglabs/neutrino
+
 chmod +w blockmanager.go
 if ! patch  <~/xud-simnet/scripts/neutrino.patch ; then
-	echo "unable to patch neutrion"
-	exit 1
+        echo "unable to patch neutrion"
+        exit 1
 fi
 echo "neutrino patched"
 
-cd $GOPATH/src/github.com/lightningnetwork/lnd
-if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-install.log 2>&1 ; then
-	echo "unable to make lnd after neutrino patch"
-	exit 1
-fi
-echo "lnd compiled"
-if !  make install tags="invoicesrpc" >> /tmp/xud-simnet-install.log 2>&1 ; then
-	echo "unable to make install lnd"
-	exit 1
-fi
-echo "lnd installed"
+cd /tmp/lnd
 
+
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.6.1-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to compile lnd"
+	exit 1
+fi
+
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.6.1-beta" ./cmd/lncli >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to compile lnd"
+	exit 1
+fi
+
+echo "lnd installed"
 #### xud
 cd ~/xud-simnet
 if ! git clone https://github.com/ExchangeUnion/xud.git >> /tmp/xud-simnet-install.log 2>&1; then

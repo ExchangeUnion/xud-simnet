@@ -86,7 +86,7 @@ timeout="120"
 #echo "btcd started"
 #### ltcd
 cd ~/xud-simnet/ltcd
-nohup ltcd -C ./btcd.conf --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:29555 --rpcuser=xu --rpcpass=xu --rpclisten=127.0.0.1:19556 --nolisten --rpccert=./rpc.cert --rpckey=./rpc.key> /dev/null 2>&1 &
+nohup ltcd -C ./btcd.conf --simnet --txindex --datadir=./data --logdir=./logs --addpeer=35.231.222.142:39555 --rpcuser=xu --rpcpass=xu --rpclisten=127.0.0.1:19556 --nolisten --rpccert=./rpc.cert --rpckey=./rpc.key> /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))

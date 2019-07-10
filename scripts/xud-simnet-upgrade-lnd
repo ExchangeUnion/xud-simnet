@@ -1,23 +1,36 @@
 #!/bin/bash
 
-cd $GOPATH/src/github.com/lightningnetwork/lnd
-git reset --hard
-git remote set-url origin https://github.com/lightningnetwork/lnd.git
-git fetch --all --tags --prune
-if ! git checkout tags/v0.6.1-beta-rc2; then
-	echo "unable to git checkout lnd tag"
-	exit 1
-fi
+cd /tmp
+rm -rf lnd
+mkdir lnd
+cd lnd
+cp ~/xud-simnet/lnd-v0.7.0-beta/*.tar.gz .
+tar -xvzf vendor.tar.gz
+tar -xvzf lnd-source-v0.7.0-beta.tar.gz
+	
 git apply ~/xud-simnet/scripts/limits.patch
+echo "lnd limits patched"
 
-make clean
-if ! GO111MODULE=off GOPATH=$GOPATH make tags="invoicesrpc"  >> /tmp/xud-simnet-install.log 2>&1 ; then
-	echo "unable to make lnd"
+cd /tmp/lnd/vendor/github.com/lightninglabs/neutrino
+
+chmod +w blockmanager.go
+if ! patch  <~/xud-simnet/scripts/neutrino.patch ; then
+        echo "unable to patch neutrion"
+        exit 1
+fi
+echo "neutrino patched"
+
+cd /tmp/lnd
+
+
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.7.0-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to compile lnd"
 	exit 1
 fi
-echo "lnd compiled"
-if !  make install tags="invoicesrpc" >> /tmp/xud-simnet-install.log 2>&1 ; then
-	echo "unable to make install lnd"
+
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.7.0-beta" ./cmd/lncli >> /tmp/xud-simnet-install.log 2>&1 ; then
+	echo "unable to compile lnd"
 	exit 1
 fi
+
 echo "lnd installed"
