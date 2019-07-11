@@ -150,6 +150,8 @@ if ! patch  <~/xud-simnet/scripts/neutrino.patch ; then
 fi
 echo "neutrino patched"
 
+sed -i.bak "s/\!w.isDevEnv/w.isDevEnv/" /tmp/lnd/vendor/github.com/btcsuite/btcwallet/wallet/wallet.go 
+
 cd /tmp/lnd
 
 

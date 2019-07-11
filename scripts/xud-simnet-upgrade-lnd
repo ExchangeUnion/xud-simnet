@@ -4,13 +4,14 @@ cd /tmp
 rm -rf lnd
 mkdir lnd
 cd lnd
-cp ~/xud-simnet/lnd-v0.7.0-beta/*.tar.gz .
-tar -xvzf vendor.tar.gz
-tar -xvzf lnd-source-v0.7.0-beta.tar.gz
+cp ~/xud-simnet/lnd-v0.6.1-beta/*.tar.gz .
+tar -xzf vendor.tar.gz
+tar -xzf lnd-source-v0.6.1-beta.tar.gz
 	
 git apply ~/xud-simnet/scripts/limits.patch
 echo "lnd limits patched"
 
+sed -i.bak "s/\!w.isDevEnv/w.isDevEnv/" /tmp/lnd/vendor/github.com/btcsuite/btcwallet/wallet/wallet.go 
 cd /tmp/lnd/vendor/github.com/lightninglabs/neutrino
 
 chmod +w blockmanager.go
@@ -23,12 +24,12 @@ echo "neutrino patched"
 cd /tmp/lnd
 
 
-if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.7.0-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.6.1-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to compile lnd"
 	exit 1
 fi
 
-if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.7.0-beta" ./cmd/lncli >> /tmp/xud-simnet-install.log 2>&1 ; then
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.6.1-beta" ./cmd/lncli >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to compile lnd"
 	exit 1
 fi
