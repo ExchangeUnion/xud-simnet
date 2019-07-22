@@ -3,5 +3,5 @@ xud-simnet
 The XUD Simulation Network
 
 Description and usage via
-* [0-install Docker](https://github.com/ExchangeUnion/xud/wiki/Docker) or
-* [Simnet Installation](https://github.com/ExchangeUnion/xud/wiki/SimNet)
+* [Docker](https://github.com/ExchangeUnion/xud/wiki/Docker) (recommended) or
+* [Native Installation](https://github.com/ExchangeUnion/xud/wiki/SimNet)
