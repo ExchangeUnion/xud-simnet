@@ -1,0 +1,18 @@
+#!/bin/bash
+
+cd ~/xud-simnet
+
+shopt -s expand_aliases
+source setup.bash
+
+
+xucli sell 0.1 btc/dai 9998 &
+xucli sell 0.1 ltc/btc 0.0077 &
+xucli sell 0.1 ltc/dai 98 &
+xucli sell 0.1 weth/btc 0.021 &
+xucli buy 0.1 btc/dai 10000 &
+xucli buy 0.1 ltc/btc 0.0079 &
+xucli buy 0.1 ltc/dai 100 &
+xucli buy 0.1 weth/btc 0.023 &
+
+sleep 5
