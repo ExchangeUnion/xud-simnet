@@ -2,6 +2,4 @@ xud-simnet
 ============
 The XUD Simulation Network
 
-Description and usage via
-* [Docker (recommended)](https://github.com/ExchangeUnion/xud/wiki/Docker) or
-* [Native Installation](https://github.com/ExchangeUnion/xud/wiki/SimNet)
+Get started via [Docker (recommended)](https://docs.exchangeunion.com/start-trading/user-guide) or [Native Installation](https://docs.exchangeunion.com/development/native-simnet).
