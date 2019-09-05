@@ -11,8 +11,8 @@ if [ $pairs -eq 4 ] ; then
 	exit 1
 fi
 
-WETH="0x46AF55C4320D37bCeA9a3cF6f0Fe18FFf7D9685b"
-DAI="0x7CB0a7b39358CFac898CD26A6934c2f74d9aAD20"
+WETH=0x892F91dc428Fc3Dc0a57eC46C8245F2511b8a542
+DAI=0x4115652c9025d99512e9026B8F11C3E265bfecD7
 
 xucli removepair WETH/BTC > /dev/null 2>&1
 xucli removepair BTC/DAI > /dev/null 2>&1

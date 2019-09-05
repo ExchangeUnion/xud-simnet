@@ -6,10 +6,14 @@ source setup.bash
 
 activate_venv
 
-EndpointRegistry="0x5a4F3a91B28bfCbDE780Cbd12dA2A992a3e0b564"
-SecretRegistry="0x891A1718D69dba34fD4e8c646c52342C57fb705E"
-TokenNetworkRegistry="0x9133dC1d16390806c4f9c22293f96D044F6FDd39"
-env="production"
+SecretRegistry=0xE51d15dEbe0F037ae787336782e3dA43ba653a8D
+TokenNetworkRegistry=0xdE8A2bdDF39C364e099D0637Dc1a7e2B8f73A4A5
+ServiceRegistry=0x4C3Abe4F53247F03A663b55FF02fD403BaBf176d
+UserDeposit=0x19f8B656fBf17a83a5023eEbd675B1Ae5Bb5dF50
+MonitoringService=0x3B26A3d3D0c262359d1807863aE0D0FB6831D081
+OneToN=0x7337e831cF5BD75B0045050E6C6549cf914A923D
+
+env="development"
 
 address_file=~/xud-simnet/raiden-wd/address
 if [ ! -f $address_file ]; then
@@ -23,6 +27,7 @@ datadir=~/xud-simnet/raiden-wd/exchange
 keystore=~/xud-simnet/raiden-wd/keystore
 
 cd  ~/xud-simnet/raiden-wd
-raiden --datadir $datadir --keystore-path $keystore  --network-id 4321 --accept-disclaimer --address $address --rpc --api-address 0.0.0.0:5001 --environment-type $env  --password-file $passwd_file --no-sync-check --accept-disclaimer --tokennetwork-registry-contract-address $TokenNetworkRegistry --secret-registry-contract-address $SecretRegistry --endpoint-registry-contract-address $EndpointRegistry --gas-price 10000000000 --eth-rpc-endpoint 35.231.222.142:8546  --matrix-server https://raidentransport.exchangeunion.com --resolver-endpoint http://localhost:8887/resolveraiden
+
+raiden --datadir $datadir --keystore-path $keystore  --network-id 4321 --accept-disclaimer --address $address --rpc --api-address 0.0.0.0:5001 --environment-type $env  --password-file $passwd_file --no-sync-check --accept-disclaimer --tokennetwork-registry-contract-address $TokenNetworkRegistry --secret-registry-contract-address $SecretRegistry  --gas-price 10000000000 --eth-rpc-endpoint 35.231.222.142:8546  --matrix-server https://raidentransport.exchangeunion.com --resolver-endpoint http://localhost:8887/resolveraiden --service-registry-contract-address $ServiceRegistry --one-to-n-contract-address $OneToN --user-deposit-contract-address $UserDeposit --monitoring-service-contract-address $MonitoringService --routing-mode private
 
 deactivate

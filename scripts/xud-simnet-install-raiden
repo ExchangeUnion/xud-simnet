@@ -33,7 +33,7 @@ make_dir ~/xud-simnet/raiden-wd
 
 #### raiden
 echo "git clone raiden"
-if ! git clone -b from-master-restore https://github.com/offerm/raiden.git ~/xud-simnet/raiden >> /tmp/xud-simnet-install.log 2>&1; then
+if ! git clone -b develop https://github.com/ExchangeUnion/raiden.git  ~/xud-simnet/raiden >> /tmp/xud-simnet-install.log 2>&1; then
 	echo "unable to git clone raiden"
 	exit 1
 fi
@@ -55,7 +55,7 @@ if ! pip install --upgrade pip >> /tmp/xud-simnet-install.log 2>&1;then
 fi
 
 echo "install requirements"
-if ! pip install -c constraints.txt --upgrade -r requirements.txt >> /tmp/xud-simnet-install.log 2>&1;then
+if ! pip install  --upgrade -r requirements.txt >> /tmp/xud-simnet-install.log 2>&1;then
 	echo "unable to install requirements for raiden"
 	exit 1
 fi
