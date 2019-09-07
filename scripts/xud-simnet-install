@@ -153,6 +153,7 @@ echo "neutrino patched"
 sed -i.bak "s/\!w.isDevEnv/w.isDevEnv/" /tmp/lnd/vendor/github.com/btcsuite/btcwallet/wallet/wallet.go 
 
 cd /tmp/lnd
+patch lnd.go ~/xud-simnet/scripts/lnd.patch
 
 
 if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.7.1-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
