@@ -134,9 +134,9 @@ cd /tmp
 rm -rf lnd
 mkdir lnd
 cd lnd
-cp ~/xud-simnet/lnd-v0.7.1-beta/*.tar.gz .
+cp ~/xud-simnet/lnd-v0.8.1-beta/*.tar.gz .
 tar -xzf vendor.tar.gz
-tar -xzf lnd-source-v0.7.1-beta.tar.gz
+tar -xzf lnd-source-v0.8.1-beta.tar.gz
 	
 git apply ~/xud-simnet/scripts/limits.patch
 echo "lnd limits patched"
@@ -156,12 +156,12 @@ cd /tmp/lnd
 patch lnd.go ~/xud-simnet/scripts/lnd.patch
 
 
-if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.7.1-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.8.1-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to compile lnd"
 	exit 1
 fi
 
-if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.7.1-beta" ./cmd/lncli >> /tmp/xud-simnet-install.log 2>&1 ; then
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.8.1-beta" ./cmd/lncli >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to compile lnd"
 	exit 1
 fi
