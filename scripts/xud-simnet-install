@@ -44,6 +44,18 @@ if [ $? -ne 0 ]; then
 	echo "killall is missing"
 	exit 1
 fi
+# verify rsync
+temp=`which rsync`
+if [ $? -ne 0 ]; then
+	echo "rsync is missing"
+	exit 1
+fi
+# verify patch
+temp=`which patch`
+if [ $? -ne 0 ]; then
+	echo "patch is missing"
+	exit 1
+fi
 # verify go
 temp=`which go`
 if [ $? -ne 0 ]; then
