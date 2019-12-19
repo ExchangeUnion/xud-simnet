@@ -4,7 +4,7 @@
  func (b *blockManager) calcNextRequiredDifficulty(newBlockTime time.Time,
  	reorgAttempt bool) (uint32, error) {
  
-+        return b.server.chainParams.PowLimitBits, nil
++        return b.cfg.ChainParams.PowLimitBits, nil
  	hList := b.headerList
  	if reorgAttempt {
  		hList = b.reorgList

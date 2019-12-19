@@ -104,7 +104,7 @@ echo "ltcd started"
 #### lndbtc
 cd ~/xud-simnet/lndbtc
 cert=~/xud-simnet/btcd/rpc.cert
-nohup lnd --noseedbackup --rpclisten=127.0.0.1:10002 --listen=127.0.0.1:10012 --restlisten=8002 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --bitcoin.active --bitcoin.simnet  --btcd.rpcuser=xu --btcd.rpcpass=xu --debuglevel=debug --alias="BTC@$xname" --btcd.rpchost=127.0.0.1:18556  --btcd.rpccert=$cert --bitcoin.node neutrino  --neutrino.connect 35.231.222.142:38555 --chan-enable-timeout=0m10s > /dev/null 2>&1 &
+nohup lnd --noseedbackup --rpclisten=127.0.0.1:10002 --listen=127.0.0.1:10012 --restlisten=8002 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --bitcoin.active --bitcoin.simnet  --btcd.rpcuser=xu --btcd.rpcpass=xu --debuglevel=debug --alias="BTC@$xname" --btcd.rpchost=127.0.0.1:18556  --btcd.rpccert=$cert --bitcoin.node neutrino  --neutrino.connect 35.231.222.142:38555 --chan-enable-timeout=0m10s --max-cltv-expiry=5000 > /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))
@@ -122,7 +122,7 @@ echo "lndbtc started"
 #### lndltc
 cd ~/xud-simnet/lndltc
 cert=~/xud-simnet/ltcd/rpc.cert
-nohup lnd --noseedbackup --rpclisten=127.0.0.1:10001 --listen=127.0.0.1:10011 --restlisten=8001 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --litecoin.active --litecoin.simnet  --ltcd.rpcuser=xu --ltcd.rpcpass=xu --debuglevel=debug --alias="LTC@$xname" --ltcd.rpchost=127.0.0.1:19556  --ltcd.rpccert=$cert --litecoin.node ltcd  --neutrino.connect 35.231.222.142:29555 --chan-enable-timeout=0m10s > /dev/null 2>&1 &
+nohup lnd --noseedbackup --rpclisten=127.0.0.1:10001 --listen=127.0.0.1:10011 --restlisten=8001 --datadir=./data --logdir=./logs  --nobootstrap --no-macaroons --litecoin.active --litecoin.simnet  --ltcd.rpcuser=xu --ltcd.rpcpass=xu --debuglevel=debug --alias="LTC@$xname" --ltcd.rpchost=127.0.0.1:19556  --ltcd.rpccert=$cert --litecoin.node ltcd  --neutrino.connect 35.231.222.142:29555 --chan-enable-timeout=0m10s --max-cltv-expiry=20000 > /dev/null 2>&1 &
 num="0"
 while true; do
 	if (("$num" > "$timeout"))
