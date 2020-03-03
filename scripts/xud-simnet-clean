@@ -25,8 +25,6 @@ fi
 #confirm_all_not_running
 xud-simnet-stop
 
-delete_dir "btcd"
-delete_dir "ltcd"
 delete_dir "lndbtc"
 delete_dir "lndltc"
 delete_dir "xud"
