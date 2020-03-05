@@ -106,6 +106,7 @@ tar -xzf vendor.tar.gz
 tar -xzf lnd-source-v0.9.1-beta.tar.gz
 	
 git apply ~/xud-simnet/scripts/limits.patch
+git apply ~/xud-simnet/scripts/fundingmanager-btc.patch
 echo "lnd-btc limits patched"
 
 cd /tmp/lnd-btc/vendor/github.com/lightninglabs/neutrino
@@ -147,6 +148,7 @@ tar -xzf vendor.tar.gz
 tar -xzf lnd-source-v0.9.0-beta.tar.gz
 
 git apply ~/xud-simnet/scripts/limits.patch
+git apply ~/xud-simnet/scripts/fundingmanager-ltc.patch
 echo "lnd-ltc limits patched"
 
 cd /tmp/lnd-ltc/vendor/github.com/ltcsuite/neutrino
