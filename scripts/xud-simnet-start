@@ -168,7 +168,7 @@ while true; do
 		exit 1
 	fi
 	if  xucli getinfo 2>&1 |  egrep "litecoin|LTC" > /dev/null 2>&1; then
-		break	
+		break
 	fi
 	sleep 1
 	num=$[$num + 1]
