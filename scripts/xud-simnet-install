@@ -101,9 +101,9 @@ cd /tmp
 rm -rf lnd-btc
 mkdir lnd-btc
 cd lnd-btc
-cp ~/xud-simnet/lndbtc-v0.9.1-beta/*.tar.gz .
+cp ~/xud-simnet/lndbtc-v0.9.0-beta/*.tar.gz .
 tar -xzf vendor.tar.gz
-tar -xzf lnd-source-v0.9.1-beta.tar.gz
+tar -xzf lnd-source-v0.9.0-beta.tar.gz
 	
 git apply ~/xud-simnet/scripts/limits.patch
 git apply ~/xud-simnet/scripts/fundingmanager-btc.patch
@@ -123,12 +123,12 @@ sed -i.bak "s/\!w.isDevEnv/w.isDevEnv/" /tmp/lnd-btc/vendor/github.com/btcsuite/
 cd /tmp/lnd-btc
 patch lnd.go ~/xud-simnet/scripts/lnd.patch
 
-if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.9.1-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.9.0-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to compile lnd-btc"
 	exit 1
 fi
 
-if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.9.1-beta" ./cmd/lncli >> /tmp/xud-simnet-install.log 2>&1 ; then
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.9.0-beta" ./cmd/lncli >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to compile lnd-btc"
 	exit 1
 fi
@@ -155,7 +155,7 @@ cd /tmp/lnd-ltc/vendor/github.com/ltcsuite/neutrino
 
 chmod +w blockmanager.go
 if ! patch  <~/xud-simnet/scripts/neutrino.patch ; then
-        echo "unable to patch neutrion"
+        echo "unable to patch neutrino"
         exit 1
 fi
 echo "neutrino patched"
@@ -165,7 +165,7 @@ sed -i.bak "s/\!w.isDevEnv/w.isDevEnv/" /tmp/lnd-ltc/vendor/github.com/ltcsuite/
 cd /tmp/lnd-ltc
 patch lnd.go ~/xud-simnet/scripts/lnd.patch
 
-if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.9.1-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
+if ! GO111MODULE=on go install -v -mod=vendor -tags="invoicesrpc" -ldflags "-X github.com/lightningnetwork/lnd/build.Commit=v0.9.0-beta" ./cmd/lnd >> /tmp/xud-simnet-install.log 2>&1 ; then
 	echo "unable to compile lnd-ltc"
 	exit 1
 fi
