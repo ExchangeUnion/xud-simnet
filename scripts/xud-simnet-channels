@@ -27,12 +27,12 @@ if [ "$needBTC" = 0 ] && [ "$needLTC" = 0 ]; then
 	exit 1
 fi
 # ensure connection to test nodes
-xucli connect 02b66438730d1fcdf4a4ae5d3d73e847a272f160fee2938e132b52cab0a0d9cfc6@35.196.118.79:8885 >/dev/null 2>&1
+xucli connect 02b66438730d1fcdf4a4ae5d3d73e847a272f160fee2938e132b52cab0a0d9cfc6@xud1.simnet.exchangeunion.com:28885 >/dev/null 2>&1
 sleep 5
 
 if [ "$needBTC" = 1 ]; then
 	echo "Opening BTC channel"
-	let server="$RANDOM % 3 +1"
+	let server="$RANDOM % 1 +1"
 	let head="$server*2"
 	connectstr=`xucli -j listpeers|egrep -A1 '"BTC"|address'|sed -n '1p;7p;13p;5p;11p;17p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
 	echo "open channel with $connectstr"
@@ -41,7 +41,7 @@ fi
 
 if [ "$needLTC" = 1 ]; then
 	echo "Opening LTC channel"
-	let server="$RANDOM % 3 +1"
+	let server="$RANDOM % 1 +1"
 	let head="$server*2"
 	connectstr=`xucli -j listpeers|egrep -A1 '"LTC"|address'|sed -n '1p;7p;13p;5p;11p;17p'|head -n $head|tail -n 2|sed 's/\"//g'|sed 's/\,//'|sed 's/ //g'|tac|paste -d "@"  - -|sed 's/address://'|cut -d ":" -f1`
 	echo "open channel with $connectstr"
